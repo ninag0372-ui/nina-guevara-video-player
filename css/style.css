@@ -1,0 +1,128 @@
+/* CSS Document */
+html{
+    font-family:'Times New Roman', Times, serif;
+    font-size: 1.2rem;
+}
+body{
+    background-image: url(../img/AdobeStock_537494563.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0;
+}
+
+.wrapper{
+    width: 70vw;
+    height: 90vh;
+    background-color: #F2F0F2;
+    box-shadow: 25px 25px 0px #484E6B;
+    margin: 5vh auto;
+    overflow: hidden;
+    display: flex;
+    padding: 0;
+}
+/* Navigation */
+
+
+.navigation{
+    background-color: #1F1F26;
+    height: 100%;
+    width: 35%;
+    overflow: scroll;
+}
+
+.navigation img{
+    max-width: 100%;
+    height: auto;
+}
+/* Song list */
+.playlist{
+    color: #F2F0F2;
+    text-align: center;
+}
+.playlist h2{
+    padding: 8px 16px;
+}
+
+.playlist ul{
+    background-color: #1F1F26;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.playlist ul li{
+    display: block;
+    padding: 15px 16px;
+    text-decoration: none;
+    transition: 0.3s all ease-in-out;
+}
+
+.playlist ul li:hover{
+    background-color: #7B81A6;
+    cursor: pointer;
+}
+#pause{
+    display: none;
+}
+
+ /* Video player */
+ .main-vid{
+    width: 100%;
+    overflow: scroll;
+}
+
+.vid-info{
+    background-color: #1e1e26;
+    color: #F2F0F2;
+    overflow: auto;
+    padding: 10px;
+    
+}
+
+.player video{
+    display: block;
+    margin: auto;
+    width: 40vw;
+    padding: 20px;
+    padding-bottom: 0;
+}
+
+.vid-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.vid-buttons button{
+    font-size: 1.10rem;
+    margin: 10px 15px 15px;
+    border: none;
+    border-radius: 50%;
+    background-color: #1F1F26;
+    color: #F2F0F2;
+    text-align: center;
+    padding: 20px;
+    transition: 0.3s all ease-in-out;
+    overflow: hidden;
+}
+
+.vid-buttons button:hover{
+    background-color: #7B81A6;
+}
+/* progress bar */
+.progress-bar{
+    display: block;
+    margin: auto;
+    border-radius: 50px;
+    width: 40vw;
+    height: 45px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.fill{
+    background-image: linear-gradient(to bottom, #7B81A6 0%, #484E6B 100%);
+    width: 0%;
+    height: 100%;
+    transition: width 500ms;
+}

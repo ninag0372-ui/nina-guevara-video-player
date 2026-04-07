@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Video Player</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="video player">
+        <meta name="viewport" content="width=device-width, inital-scale=1">
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <!-- Navigation bar -->
+            <div class="navigation">
+                <header>
+                    <img src = "img/KAITO-viewer-logo.png" width="300">
+                </header>
+                <!-- tracklist -->
+                <div class="playlist">
+                    <br>
+                    <br>
+                    <nav>
+                        <ul>
+                            <li>The Last Supper</li>
+                            <li>DNA</li>
+                            <li>Judgement of Corruption</li>
+                            <li>Snowman</li>
+                            <li>The Last Supper</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main video -->
+            <div class="main-vid">
+                <!-- Title, artist, original site I found it on -->
+                <div class="vid-info">
+                    <h1>Now Playing: The Last Supper</h1>
+                    <h2>Original Poster: natsu (SCL Project)</h2>
+                    <h3>Uploaded on: YouTube</h3>
+                </div>
+
+                <div class="player">
+                    <video src="videos/The Last Supper.mp4"></video>
+                </div>
+                <!-- Pause, play, next, prev buttons -->
+                <div class="vid-buttons">
+                    <button id="previous">⏮</button>
+                    <button id="play">▶︎</button>
+                    <button id="pause">❚❚</button>
+                    <button id="next">⏭</button>
+                </div>
+                
+                <!-- progress bar -->
+                <div class="progress-bar">
+                    <div class="fill">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // Base Video Player
+            const video = document.querySelector('.player video');
+            const vidtitle = document.querySelector('.vid-info h1');
+            const uploadername = document.querySelector('.main-vid h2');
+            const playlistEl = document.querySelector('.playlist ul');
+            video.volume = 0.5;
+
+            // buttons
+            const playbtn = document.getElementById('play');
+            const pausebtn = document.getElementById('pause');
+            const nextbtn = document.getElementById('next');
+            const prevbtn = document.getElementById('previous');
+
+            // Main Array
+
+            const playlist = [
+                {
+                    title: 'The Last Supper',
+                    artist: 'natsu (SCL Project)',
+                    src: 'videos/The Last Supper.mp4',
+                    poster: 'img/Last-Supper-Thumbnail.jpg',
+
+                },
+                {
+                    title: 'D / N /  A (cover)' ,
+                    artist: 'Asaichi',
+                    src: 'videos/D_N_A.mp4',
+                    poster: 'img/DNA-Thumbnail.jpg',
+                },
+                {
+                    title: 'Judgement of corruption',
+                    artist: 'mothy akuno',
+                    src: 'videos/Judgement-of-corruption.mp4',
+                    poster: 'img/Judgement-of-corruption.jpg',
+                },
+                {
+                    title: 'Snowman',
+                    artist: 'halyosy ',
+                    src: 'videos/Snowman.mp4',
+                    poster: 'img/Snowman-thumbnail.jpg',
+                },
+                {
+                    title: 'Passion at 25:00',
+                    artist: 'Iori Kanzaki',
+                    src: 'videos/Passion-at-2500.mp4',
+                    poster: 'img/Passion-at-25-thumbnail.png',
+                }
+            ];
+
+            let currentIndex = 0;
+
+            // Load video
+            function loadVideo(index){
+                currentIndex = index;
+                const track = playlist[index];
+
+                video.src = track.src;
+                video.poster = track.poster;
+                vidtitle.textContent = `Now Playing: ${track.title}`;
+                uploadername.textContent = `Original Poster: ${track.artist}`;
+
+                video.load();
+                video.play();
+
+                playbtn.style.display = 'none';
+                pausebtn.style.display = 'inline-block';
+            }
+
+            function updateProgressBar(){
+                let percentage = video.currentTime / video.duration * 100;
+                let progress = document.querySelector('.fill');
+                progress.style.width = percentage + '%';
+            }
+
+            video.addEventListener('timeupdate', updateProgressBar);
+
+            // Update pause and play button visibility
+            function updateButtons(){
+                playbtn.style.display = 'none';
+                pausebtn.style.display = 'inline-block';
+            }
+
+            // Active Song
+            function highlightActive(){
+                document.querySelector('.playlist ul li:focus').forEach((li, i => {
+                    li.classList.toggle("active", i == currentIndex);
+                }));
+            }
+
+            // render playlist
+            playlistEl.innerHTML = "";
+            playlist.forEach((track, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${track.title} - ${track.artist}`;
+
+                li.addEventListener('click', () => {
+                    loadVideo(index);
+                });
+                playlistEl.appendChild(li);
+            })
+
+            // Controls
+            playbtn.addEventListener('click', () => {
+                video.play();
+                playbtn.style.display = 'none';
+                pausebtn.style.display = 'inline-block';
+            });
+
+            pausebtn.addEventListener('click', () => {
+                video.pause();
+                pausebtn.style.display='none';
+                playbtn.style.display='inline-block';
+            });
+
+            nextbtn.addEventListener('click', () => {
+                let nextIndex = (currentIndex + 1) % playlist.length;
+                loadVideo(nextIndex);
+            });
+
+            prevbtn.addEventListener('click', () => {
+                let nextIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+                loadVideo(nextIndex);
+            });
+
+            video.addEventListener('ended', () => {
+                nextbtn.click();
+            });
+
+
+        </script>
+    </body>
+</html>
